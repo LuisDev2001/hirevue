@@ -3,7 +3,7 @@
   "description": "Simple api sample in Node",
   "version": "1.0.0",
   "private": true,
-  "main": "index.js",
+  "main": "dist/api/index.js",
   "scripts": {
     "dev": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'npm run build && npm run start'",
     "build": "rimraf dist && tsc",
@@ -15,7 +15,7 @@
     "axios": "^1.7.2",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "express-rate-limit": "^7.5.1",
     "helmet": "^7.1.0",
     "memory-cache": "^0.2.0",
