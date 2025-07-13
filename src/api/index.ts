@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
-import jobsRouter from './routes/jobs';
+import jobsRouter from '../routes/jobs';
 import rateLimit from 'express-rate-limit'; // Importa la librería
 
 dotenv.config();
