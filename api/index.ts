@@ -19,7 +19,7 @@ const apiLimiter = rateLimit({
 
  // Configuración de CORS para permitir solo tu dominio
 const corsOptions = {
-  origin: 'https://elrincondevue.com/', // Reemplaza con el dominio real de tu blog
+  origin: process.env.ALLOWED_ORIGINS?.split(','),
   optionsSuccessStatus: 200 // Para navegadores antiguos (IE11, algunos SmartTVs)
 };
 
