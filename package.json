@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "nodemon --watch 'src/**' --ext 'ts,json' --exec 'npm run build && npm run start'",
     "build": "rimraf dist && tsc",
-    "start": "node dist/index.js"
+    "start": "node dist/api/index.js"
   },
   "author": "",
   "license": "Apache-2.0",
