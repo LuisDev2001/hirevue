@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import dotenv from 'dotenv';
 import jobsRouter from './routes/jobs';
 import rateLimit from 'express-rate-limit'; // Importa la librería
+import type { CorsOptions } from 'cors'
 
 dotenv.config();
 
@@ -17,14 +18,31 @@ const apiLimiter = rateLimit({
   message: 'Too many requests from this IP, please try again after 15 minutes'
 });
 
- // Configuración de CORS para permitir solo tu dominio
-const corsOptions = {
-  origin: process.env.ALLOWED_ORIGINS?.split(','),
-  optionsSuccessStatus: 200 // Para navegadores antiguos (IE11, algunos SmartTVs)
+const whitelist = process.env.ALLOWED_ORIGINS?.split(',') || [];
+
+// ✅ CORS con validación personalizada
+const corsOptions: CorsOptions = {
+  origin: function (origin, callback) {
+    if (!origin || whitelist.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  optionsSuccessStatus: 200
 };
 
 // Middleware
 app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  const apiKey = req.get('x-api-key');
+  if (!apiKey || apiKey !== process.env.API_SECRET_KEY) {
+    return res.status(403).json({ error: 'Forbidden: Invalid API Key' });
+  }
+  next();
+});
+
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
